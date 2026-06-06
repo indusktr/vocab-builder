@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Vocab Builder",
+  "version": "4.1",
+  "description": "Highlight a word to see its definition and save it to your new tab.",
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  }
+}

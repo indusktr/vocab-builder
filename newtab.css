@@ -1,0 +1,93 @@
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #fff3c2;
+  color: #1f2937;
+  margin: 0;
+  padding:20px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 28px;
+  color: #111827;
+}
+
+.empty-state {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1.1rem;
+  grid-column: 1 / -1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  cursor: grab;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.card.dragging {
+  opacity: 0.75;
+  transform: scale(1.02);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.16), 0 8px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card.drag-over {
+  outline: 3px dashed rgba(59, 130, 246, 0.8);
+  outline-offset: -10px;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12), 0 6px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card-word {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 5px;
+}
+
+.card-text {
+  margin-bottom: 5px;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.delete-btn {
+  margin-top: 15px;
+  padding: 6px 12px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: flex-start;
+  font-size: 0.85rem;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
