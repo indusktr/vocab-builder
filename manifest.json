@@ -1,10 +1,13 @@
 {
   "manifest_version": 3,
   "name": "Vocab Builder",
-  "version": "4.1",
+  "version": "5.0",
   "description": "Highlight a word to see its definition and save it to your new tab.",
   "permissions": [
     "storage"
+  ],
+  "host_permissions": [
+    "https://api.dictionaryapi.dev/*"
   ],
   "background": {
     "service_worker": "background.js"
