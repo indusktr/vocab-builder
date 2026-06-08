@@ -182,13 +182,18 @@ h1 {
 }
 
 .status-btn {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: 10px;
   border: 1px solid #d1d5db;
   background: #f8fafc;
   color: #374151;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
