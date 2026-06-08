@@ -17,11 +17,68 @@ h1 {
   color: #111827;
 }
 
+.subtitle {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #6b7280;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.toolbar input[type="search"] {
+  width: 320px;
+  max-width: 60%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+}
+
+.toolbar select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  font-size: 0.95rem;
+}
+
 .empty-state {
   text-align: center;
   color: #6b7280;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 28px 12px;
+  border: 2px dashed rgba(107,114,128,0.12);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.6);
+}
+
+.empty-state .primary-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #111827;
+  color: white;
+  cursor: pointer;
+}
+
+.empty-state .primary-btn:hover {
+  opacity: 0.95;
 }
 
 .grid {
@@ -30,15 +87,25 @@ h1 {
   gap: 20px;
 }
 
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
 .card {
-  background: white;
+  position: relative;
   padding: 20px;
   border-radius: 14px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   cursor: grab;
+  background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(255,255,255,0.35));
+  border: 1px solid rgba(255,255,255,0.45);
+  box-shadow: 0 10px 30px rgba(15,23,42,0.12), 0 4px 10px rgba(59,130,246,0.06);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  transition: transform 0.22s cubic-bezier(.2,.9,.2,1), box-shadow 0.22s ease;
 }
 
 .card:active {
@@ -57,37 +124,68 @@ h1 {
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12), 0 6px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-10px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(15,23,42,0.18), 0 8px 20px rgba(59,130,246,0.08), 0 2px 6px rgba(0,0,0,0.04);
+}
+
+/* Colorful accents to make cards attractive */
+.card:nth-child(6n+1) { border-top: 4px solid rgba(99,102,241,0.85); }
+.card:nth-child(6n+2) { border-top: 4px solid rgba(16,185,129,0.85); }
+.card:nth-child(6n+3) { border-top: 4px solid rgba(14,165,233,0.85); }
+.card:nth-child(6n+4) { border-top: 4px solid rgba(249,115,22,0.85); }
+.card:nth-child(6n+5) { border-top: 4px solid rgba(236,72,153,0.85); }
+.card:nth-child(6n+6) { border-top: 4px solid rgba(99,102,241,0.65); }
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  pointer-events: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
 .card-word {
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  font-weight: 700;
   text-transform: capitalize;
-  margin-bottom: 5px;
-  border-bottom: 2px solid #e5e7eb;
-  padding-bottom: 5px;
+  margin-bottom: 8px;
+  color: #0f172a;
+  border-bottom: 1px solid #d1d5db;
+  padding-bottom: 6px;
+  padding-right: 56px;
+  padding-top: 4px;
 }
 
 .card-text {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   line-height: 1.5;
   flex-grow: 1;
+  color: #333333;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.card-text strong {
+  color: #1a1a1a;
+  font-weight: 800;
+  margin-right: 6px;
 }
 
 .delete-btn {
-  margin-top: 15px;
-  padding: 6px 12px;
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  background: transparent;
+  color: #374151;
+  border: 1px solid #9CA3AF;
+  border-radius: 6px;
   cursor: pointer;
-  align-self: flex-start;
   font-size: 0.85rem;
 }
 
 .delete-btn:hover {
-  background-color: #dc2626;
+  background: rgba(156,163,175,0.08);
 }

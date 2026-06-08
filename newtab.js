@@ -1,6 +1,10 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
   const wordList = document.getElementById('word-list');
+  const searchInput = document.getElementById('search');
+  const sortSelect = document.getElementById('sort');
   let words = [];
+  let searchTerm = '';
+  let sortMode = 'newest';
 
   chrome.storage.local.get({ savedWords: [] }, (result) => {
     words = result.savedWords || [];
@@ -13,19 +17,78 @@
     renderCards();
   });
 
+  // Wire up search and sort UI
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value.trim().toLowerCase();
+      renderCards();
+    });
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener('change', (e) => {
+      sortMode = e.target.value;
+      renderCards();
+    });
+    // default value
+    sortSelect.value = 'newest';
+  }
+
   function renderCards() {
     wordList.innerHTML = '';
 
-    words.forEach((item, index) => {
+    // Build a list of display items mapping to original indices
+    const displayList = words.map((item, index) => ({ item, index }));
+
+    // Apply search filter
+    const filtered = displayList.filter(({ item }) => {
+      if (!searchTerm) return true;
+      return String(item.word).toLowerCase().includes(searchTerm)
+        || String(item.definition || '').toLowerCase().includes(searchTerm)
+        || String(item.synonym || '').toLowerCase().includes(searchTerm);
+    });
+
+    // Apply sort
+    if (sortMode === 'newest') {
+      filtered.sort((a, b) => b.index - a.index);
+    } else if (sortMode === 'oldest') {
+      filtered.sort((a, b) => a.index - b.index);
+    } else if (sortMode === 'alphabetical') {
+      filtered.sort((a, b) => String(a.item.word).localeCompare(String(b.item.word)));
+    }
+
+    // If there are no results, show an empty state message
+    if (filtered.length === 0) {
+      if (words.length === 0) {
+        wordList.innerHTML = `
+          <div class="empty-state">
+            <div>You haven't saved any words yet.</div>
+            <div>Highlight a word on any webpage and use the extension popup to save it.</div>
+            <button class="primary-btn" id="how-to-save">How to save</button>
+          </div>
+        `;
+        const howBtn = document.getElementById('how-to-save');
+        if (howBtn) howBtn.addEventListener('click', () => {
+          alert("To save a word: highlight any word on a webpage, open the extension popup, and click 'Save'.");
+        });
+        return;
+      }
+
+      wordList.innerHTML = `<div class="empty-state">No words match your search.</div>`;
+      return;
+    }
+
+    // Render filtered and sorted list
+    filtered.forEach(({ item, index: originalIndex }) => {
       const card = document.createElement('div');
       card.className = 'card';
       card.draggable = true;
-      card.dataset.index = index;
+      card.dataset.index = originalIndex;
       card.innerHTML = `
         <div class="card-word">${item.word}</div>
         <div class="card-text"><strong>Definition:</strong> ${item.definition}</div>
         <div class="card-text"><strong>Synonyms:</strong> ${item.synonym}</div>
-        <button class="delete-btn" data-index="${index}">Remove</button>
+        <button class="delete-btn" data-index="${originalIndex}">×</button>
       `;
 
       addDragHandlers(card);
