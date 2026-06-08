@@ -2,9 +2,11 @@
   const wordList = document.getElementById('word-list');
   const searchInput = document.getElementById('search');
   const sortSelect = document.getElementById('sort');
+  const statusSelect = document.getElementById('statusFilter');
   let words = [];
   let searchTerm = '';
   let sortMode = 'newest';
+  let statusFilter = 'all';
 
   chrome.storage.local.get({ savedWords: [] }, (result) => {
     words = result.savedWords || [];
@@ -34,6 +36,14 @@
     sortSelect.value = 'newest';
   }
 
+  if (statusSelect) {
+    statusSelect.addEventListener('change', (e) => {
+      statusFilter = e.target.value;
+      renderCards();
+    });
+    statusSelect.value = 'all';
+  }
+
   function renderCards() {
     wordList.innerHTML = '';
 
@@ -42,6 +52,10 @@
 
     // Apply search filter
     const filtered = displayList.filter(({ item }) => {
+      const status = item.status || 'neutral';
+      if (statusFilter !== 'all' && status !== statusFilter) {
+        return false;
+      }
       if (!searchTerm) return true;
       return String(item.word).toLowerCase().includes(searchTerm)
         || String(item.definition || '').toLowerCase().includes(searchTerm)
@@ -80,6 +94,7 @@
 
     // Render filtered and sorted list
     filtered.forEach(({ item, index: originalIndex }) => {
+      const status = item.status || 'unknown';
       const card = document.createElement('div');
       card.className = 'card';
       card.draggable = true;
@@ -88,6 +103,11 @@
         <div class="card-word">${item.word}</div>
         <div class="card-text"><strong>Definition:</strong> ${item.definition}</div>
         <div class="card-text"><strong>Synonyms:</strong> ${item.synonym}</div>
+        <div class="status-row">
+          <button type="button" class="status-btn known ${status === 'known' ? 'active' : ''}" data-index="${originalIndex}" data-status="known" title="Fully memorised">✅</button>
+          <button type="button" class="status-btn review ${status === 'review' ? 'active' : ''}" data-index="${originalIndex}" data-status="review" title="Needs review">➖</button>
+          <button type="button" class="status-btn unknown ${status === 'unknown' ? 'active' : ''}" data-index="${originalIndex}" data-status="unknown" title="Don't know">❌</button>
+        </div>
         <button class="delete-btn" data-index="${originalIndex}">×</button>
       `;
 
@@ -102,6 +122,25 @@
         saveWords();
       });
     });
+
+    wordList.querySelectorAll('.status-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const wordIndex = Number(e.target.getAttribute('data-index'));
+        const newStatus = e.target.getAttribute('data-status');
+        updateWordStatus(wordIndex, newStatus);
+      });
+    });
+  }
+
+  function updateWordStatus(index, newStatus) {
+    if (!words[index]) return;
+    const currentStatus = words[index].status || 'neutral';
+    if (currentStatus === newStatus) {
+      words[index].status = 'neutral';
+    } else {
+      words[index].status = newStatus;
+    }
+    saveWords();
   }
 
   function addDragHandlers(card) {

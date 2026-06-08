@@ -10,15 +10,28 @@
     <h1>My Vocab Builder Hub</h1>
     <p class="subtitle">Highlight words on any webpage and save them here to expand your vocabulary.</p>
     <div class="toolbar">
-      <input id="search" type="search" placeholder="Search words..." aria-label="Search words">
-      <select id="sort" aria-label="Sort words">
-        <option value="newest">Newest</option>
-        <option value="oldest">Oldest</option>
-        <option value="alphabetical">Alphabetical</option>
-      </select>
-    </div>
-    <div id="word-list" class="grid">
+      <div class="toolbar-left">
+        <input id="search" type="search" placeholder="Search words..." aria-label="Search words">
+        <select id="sort" aria-label="Sort words">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="alphabetical">Alphabetical</option>
+        </select>
+        <select id="statusFilter" aria-label="Filter by memory status">
+          <option value="all">All statuses</option>
+          <option value="neutral">Neutral</option>
+          <option value="unknown">Don't know</option>
+          <option value="review">Needs review</option>
+          <option value="known">Fully memorised</option>
+        </select>
       </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot known">✅</span>Fully memorised</div>
+        <div class="legend-item"><span class="legend-dot review">➖</span>Needs review / partially known</div>
+        <div class="legend-item"><span class="legend-dot unknown">❌</span>Don't know</div>
+      </div>
+    </div>
+    <div id="word-list" class="grid"></div>
   </div>
   <script src="newtab.js"></script>
 </body>

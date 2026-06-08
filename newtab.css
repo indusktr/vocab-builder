@@ -29,11 +29,58 @@ h1 {
   display: flex;
   gap: 12px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   margin-bottom: 18px;
   max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.toolbar-left {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.legend {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.legend-dot {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.95rem;
+}
+
+.legend-dot.known {
+  background: rgba(16,185,129,0.12);
+}
+
+.legend-dot.review {
+  background: rgba(245,158,11,0.12);
+}
+
+.legend-dot.unknown {
+  background: rgba(239,68,68,0.12);
 }
 
 .toolbar input[type="search"] {
@@ -126,6 +173,64 @@ h1 {
 .card:hover {
   transform: translateY(-10px) scale(1.01);
   box-shadow: 0 20px 40px rgba(15,23,42,0.18), 0 8px 20px rgba(59,130,246,0.08), 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.status-row {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0 8px;
+}
+
+.status-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #f8fafc;
+  color: #374151;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.status-btn:hover {
+  transform: translateY(-1px);
+  border-color: #9ca3af;
+}
+
+.status-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.status-btn.active {
+  color: white;
+  border-color: transparent;
+}
+
+.status-btn.known.active {
+  background: #10b981;
+}
+
+.status-btn.review.active {
+  background: #f59e0b;
+}
+
+.status-btn.unknown.active {
+  background: #ef4444;
+}
+
+.status-btn.known:not(.active) {
+  color: #047857;
+}
+
+.status-btn.review:not(.active) {
+  color: #92400e;
+}
+
+.status-btn.unknown:not(.active) {
+  color: #b91c1c;
 }
 
 /* Colorful accents to make cards attractive */
