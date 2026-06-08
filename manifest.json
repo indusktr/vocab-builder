@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Vocab Builder",
-  "version": "5.0",
+  "version": "5.0.1",
   "description": "Highlight a word to see its definition and save it to your new tab.",
   "permissions": [
     "storage"
