@@ -1,11 +1,9 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
   const wordList = document.getElementById('word-list');
   const searchInput = document.getElementById('search');
-  const sortSelect = document.getElementById('sort');
   const statusSelect = document.getElementById('statusFilter');
   let words = [];
   let searchTerm = '';
-  let sortMode = 'newest';
   let statusFilter = 'all';
 
   chrome.storage.local.get({ savedWords: [] }, (result) => {
@@ -25,15 +23,6 @@
       searchTerm = e.target.value.trim().toLowerCase();
       renderCards();
     });
-  }
-
-  if (sortSelect) {
-    sortSelect.addEventListener('change', (e) => {
-      sortMode = e.target.value;
-      renderCards();
-    });
-    // default value
-    sortSelect.value = 'newest';
   }
 
   if (statusSelect) {
@@ -61,15 +50,6 @@
         || String(item.definition || '').toLowerCase().includes(searchTerm)
         || String(item.synonym || '').toLowerCase().includes(searchTerm);
     });
-
-    // Apply sort
-    if (sortMode === 'newest') {
-      filtered.sort((a, b) => b.index - a.index);
-    } else if (sortMode === 'oldest') {
-      filtered.sort((a, b) => a.index - b.index);
-    } else if (sortMode === 'alphabetical') {
-      filtered.sort((a, b) => String(a.item.word).localeCompare(String(b.item.word)));
-    }
 
     // If there are no results, show an empty state message
     if (filtered.length === 0) {
