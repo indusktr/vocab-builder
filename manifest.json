@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Vocab Builder",
-  "version": "5.1.1",
+  "version": "5.2.1",
   "description": "Build your personal vocabulary hub. Highlight, save, and master new words directly from any webpage as you browse.",
   "permissions": [
     "storage"
