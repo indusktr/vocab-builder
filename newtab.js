@@ -36,8 +36,14 @@
   function renderCards() {
     wordList.innerHTML = '';
 
-    // Build a list of display items mapping to original indices
-    const displayList = words.map((item, index) => ({ item, index }));
+    // Build a list of display items mapping to original indices and sort newest first
+    const displayList = words
+      .map((item, index) => ({ item, index }))
+      .sort((a, b) => {
+        const aTime = typeof a.item.savedAt === 'number' ? a.item.savedAt : a.index;
+        const bTime = typeof b.item.savedAt === 'number' ? b.item.savedAt : b.index;
+        return bTime - aTime;
+      });
 
     // Apply search filter
     const filtered = displayList.filter(({ item }) => {
