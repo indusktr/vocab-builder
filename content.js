@@ -37,20 +37,16 @@ document.addEventListener('mousedown', (e) => {
 async function showPopup(word, x, y) {
   const popup = document.createElement('div');
   popup.id = 'vocab-builder-popup';
-  // Position the popup slightly below the highlighted word
   popup.style.left = `${x}px`;
-  popup.style.top = `${y + 10}px`; 
+  popup.style.top = `${y + 10}px`;
   popup.innerHTML = `<div class="vocab-loading">Loading definition...</div>`;
   document.body.appendChild(popup);
 
   try {
-    // Fetch data from the Free Dictionary API
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
     if (!response.ok) throw new Error('Word not found');
 
     const data = await response.json();
-    
-    // Extract the first available meaning, definition, and synonyms
     const meaningObj = data[0].meanings[0];
     const definition = meaningObj.definitions[0].definition;
     const synonyms = meaningObj.synonyms || [];
@@ -58,15 +54,24 @@ async function showPopup(word, x, y) {
 
     popup.innerHTML = `
       <div class="vocab-title">${word}</div>
-      <div class="vocab-text"><strong>Def:</strong> ${definition}</div>
-      <div class="vocab-text"><strong>Syn:</strong> ${synonymText}</div>
+      <div class="vocab-text">${definition}</div>
+      <div id="vocab-synonyms" class="vocab-text"></div>
       <button id="vocab-save-btn">Save Word</button>
     `;
 
+    const synonymEl = document.getElementById('vocab-synonyms');
+    if (synonymText && synonymText !== 'None') {
+      synonymEl.textContent = synonymText;
+    } else {
+      synonymEl.style.display = 'none';
+    }
+
     document.getElementById('vocab-save-btn').addEventListener('click', () => {
+      const btn = document.getElementById('vocab-save-btn');
+      btn.textContent = '✓ Saved to Hub!';
+      btn.style.backgroundColor = '#10B981';
       saveWord(word, definition, synonymText, popup);
     });
-
   } catch (error) {
     popup.innerHTML = `<div class="vocab-error">Could not find definition for "${word}".</div>`;
   }
@@ -82,11 +87,7 @@ function saveWord(word, definition, synonym, popup) {
           return;
         }
 
-        const btn = document.getElementById('vocab-save-btn');
-        btn.textContent = 'Saved!';
-        btn.style.backgroundColor = '#10b981';
-        
-        setTimeout(() => popup.remove(), 1000); 
+        setTimeout(() => popup.remove(), 1000);
       }
     }
   );

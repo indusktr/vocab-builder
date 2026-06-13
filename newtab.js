@@ -17,7 +17,6 @@
     renderCards();
   });
 
-  // Wire up search and sort UI
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchTerm = e.target.value.trim().toLowerCase();
@@ -36,11 +35,8 @@
   function renderCards() {
     wordList.innerHTML = '';
 
-    // Build a list of display items mapping to original indices,
-    // and reverse it so the newest saved words appear first.
     const displayList = words.map((item, index) => ({ item, index })).reverse();
 
-    // Apply search filter
     const filtered = displayList.filter(({ item }) => {
       const status = item.status || 'neutral';
       if (statusFilter !== 'all' && status !== statusFilter) {
@@ -52,7 +48,6 @@
         || String(item.synonym || '').toLowerCase().includes(searchTerm);
     });
 
-    // If there are no results, show an empty state message
     if (filtered.length === 0) {
       if (words.length === 0) {
         wordList.innerHTML = `
@@ -73,17 +68,24 @@
       return;
     }
 
-    // Render filtered and sorted list
     filtered.forEach(({ item, index: originalIndex }) => {
-      const status = item.status || 'unknown';
+      const status = item.status || 'neutral';
+      const cardStatusClass = status === 'known' ? 'known' : status === 'review' ? 'review' : status === 'unknown' ? 'unknown' : '';
+      const definitionText = String(item.definition || '').trim();
+      const synonymText = String(item.synonym || '').trim();
+      const hasSynonyms = Boolean(synonymText && synonymText.toLowerCase() !== 'none');
+      const synonymMarkup = hasSynonyms
+        ? synonymText.split(',').map((synonym) => `<span class="synonym-pill">${synonym.trim()}</span>`).join('')
+        : '';
+
       const card = document.createElement('div');
-      card.className = 'card';
+      card.className = `card ${cardStatusClass}`.trim();
       card.draggable = true;
       card.dataset.index = originalIndex;
       card.innerHTML = `
         <div class="card-word">${item.word}</div>
-        <div class="card-text"><strong>Definition:</strong> ${item.definition}</div>
-        <div class="card-text"><strong>Synonyms:</strong> ${item.synonym}</div>
+        <div class="card-definition">${definitionText}</div>
+        ${hasSynonyms ? `<div class="card-synonyms">${synonymMarkup}</div>` : ''}
         <div class="status-row">
           <button type="button" class="status-btn known ${status === 'known' ? 'active' : ''}" data-index="${originalIndex}" data-status="known" title="Fully memorised">✅</button>
           <button type="button" class="status-btn review ${status === 'review' ? 'active' : ''}" data-index="${originalIndex}" data-status="review" title="Needs review">➖</button>
