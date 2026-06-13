@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Vocab Builder",
-  "version": "5.2.1",
-  "description": "Build your personal vocabulary hub. Highlight, save, and master new words directly from any webpage as you browse.",
+  "name": "Vocab Builder - Build Your Vocabulary Seamlessly",
+  "version": "5.3.1",
+  "description": "Highlight words while reading and save them to Chrome's new tab for natural vocabulary building.",
   "permissions": [
     "storage"
   ],
