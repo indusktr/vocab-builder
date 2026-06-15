@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Vocab Builder Hub</title>
+  <title>My Vocab Builder Dashboard</title>
   <link rel="stylesheet" href="newtab.css">
 </head>
 <body>
   <div class="container">
-    <h1>My Vocab Builder Hub</h1>
+    <h1>My Vocab Builder Dashboard</h1>
     <p class="subtitle">Highlight words on any webpage and save them here to expand your vocabulary.</p>
     <div class="toolbar">
       <div class="toolbar-left">
@@ -20,10 +20,13 @@
           <option value="unknown">Don't know</option>
         </select>
       </div>
-      <div class="legend">
+      <div class="toolbar-actions">
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false">🌙 Dark mode</button>
+        <div class="legend">
         <div class="legend-item"><span class="legend-dot known">✅</span>Fully memorised</div>
         <div class="legend-item"><span class="legend-dot review">➖</span>Needs review / partially known</div>
         <div class="legend-item"><span class="legend-dot unknown">❌</span>Don't know</div>
+        </div>
       </div>
     </div>
     <div id="word-list" class="grid"></div>

@@ -2,12 +2,14 @@
   const wordList = document.getElementById('word-list');
   const searchInput = document.getElementById('search');
   const statusSelect = document.getElementById('statusFilter');
+  const themeToggle = document.getElementById('themeToggle');
   let words = [];
   let searchTerm = '';
   let statusFilter = 'all';
 
-  chrome.storage.local.get({ savedWords: [] }, (result) => {
+  chrome.storage.local.get({ savedWords: [], theme: 'light' }, (result) => {
     words = result.savedWords || [];
+    applyTheme(result.theme || 'light');
 
     if (words.length === 0) {
       wordList.innerHTML = `<p class="empty-state">You haven't saved any words yet. Highlight a word on any webpage to get started!</p>`;
@@ -30,6 +32,24 @@
       renderCards();
     });
     statusSelect.value = 'all';
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      chrome.storage.local.set({ theme: nextTheme });
+    });
+  }
+
+  function applyTheme(theme) {
+    const isDark = theme === 'dark';
+    document.body.classList.toggle('theme-dark', isDark);
+
+    if (themeToggle) {
+      themeToggle.textContent = isDark ? '☀️ Light mode' : '🌙 Dark mode';
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+    }
   }
 
   function renderCards() {

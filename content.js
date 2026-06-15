@@ -68,7 +68,7 @@ async function showPopup(word, x, y) {
 
     document.getElementById('vocab-save-btn').addEventListener('click', () => {
       const btn = document.getElementById('vocab-save-btn');
-      btn.textContent = '✓ Saved to Hub!';
+      btn.textContent = '✓ Saved to Dashboard!';
       btn.style.backgroundColor = '#10B981';
       saveWord(word, definition, synonymText, popup);
     });
