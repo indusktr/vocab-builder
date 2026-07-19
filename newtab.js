@@ -72,9 +72,7 @@
       if (words.length === 0) {
         wordList.innerHTML = `
           <div class="empty-state">
-            <div>You haven't saved any words yet.</div>
-            <div>Highlight a word on any webpage and use the extension popup to save it.</div>
-            <button class="primary-btn" id="how-to-save">How to save</button>
+            <div>You haven't saved any words yet. Highlight a word on any webpage to get started!</div>
           </div>
         `;
         const howBtn = document.getElementById('how-to-save');
@@ -107,7 +105,7 @@
         <div class="card-definition">${definitionText}</div>
         ${hasSynonyms ? `<div class="card-synonyms">${synonymMarkup}</div>` : ''}
         <div class="status-row">
-          <button type="button" class="status-btn known ${status === 'known' ? 'active' : ''}" data-index="${originalIndex}" data-status="known" title="Fully memorised">✅</button>
+          <button type="button" class="status-btn known ${status === 'known' ? 'active' : ''}" data-index="${originalIndex}" data-status="known" title="Fully memorized">✅</button>
           <button type="button" class="status-btn review ${status === 'review' ? 'active' : ''}" data-index="${originalIndex}" data-status="review" title="Needs review">➖</button>
           <button type="button" class="status-btn unknown ${status === 'unknown' ? 'active' : ''}" data-index="${originalIndex}" data-status="unknown" title="Don't know">❌</button>
         </div>

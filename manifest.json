@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Vocab Builder: Build Your Vocabulary",
-  "version": "5.4.1",
-  "description": "Build English vocabulary while you browse. Definitions, Synonyms & Flashcards. Best for SAT, IELTS, TOEFL, GRE.",
+  "version": "5.4.2",
+  "description": "Build English vocabulary while you browse. Definitions, Synonyms & Flashcards. Best for SAT, IELTS, TOEFL, GRE, IB.",
   "permissions": [
     "storage"
   ],
@@ -23,14 +23,14 @@
     "newtab": "newtab.html"
   },
   "icons": {
-    "16": "icons/16.png",
-    "48": "icons/48.png",
-    "128": "icons/128.png"
+    "16": "16.png",
+    "48": "48.png",
+    "128": "128.png"
   },
   "action": {
     "default_icon": {
-      "16": "icons/16.png",
-      "32": "icons/32.png"
+      "16": "16.png",
+      "32": "32.png"
     }
   }
 }
